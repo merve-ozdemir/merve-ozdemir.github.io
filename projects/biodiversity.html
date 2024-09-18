@@ -1,28 +1,975 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2113.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merve Ozdemir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito Sans', Arial;
+    }
+    </style>
 </head>
+
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Merve Ozdemir&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: 'Nunito Sans', Arial;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    In this project, I downloaded data from Codecademy and worked to better understand and analyze it using Python and several data visualization tools.
+    The project is based on data about different species and their conservation status across US national parks.
+    Here, I take you through my thought process and learning.
+    As I am still learning and improving every day, feedback is welcome and appreciated, please feel free to reach out via email. </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <b>Background</b> <br>
+    The United States has over 60 national parks across more than 30 states. These parks are home to different ecosystems, landscapes and wildlife.
+    Many of these parks are popular among nature-lovers, hikers and casual travelers alike, and accept millions of visitors every year.
+    But US national parks also play a significant role in conservation, as many of them focus on research to protect endangered species and restore ecosystems.
+    In this project, I analyzed data from four of these parks: Bryce Canyon (Utah), Great Smoky Mountains (Tennessee/North Carolina),
+    Yellowstone (Wyoming/Montana/Idaho) and Yosemite (California). </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+  <b>Technical Background</b> <br>
+    I had prior knowledge of the basics of Python, however before starting this project, I also completed Codecademy's skill path,
+    “Visualize Data with Python” in order to get more comfortable using more data visualization methods tools.
+    I started my project by importing all the necessary libraries I thought I would need.
+    I imported “pandas” which helps with loading data and basic organization, as well as “matplotlib” and “seaborn,”
+    which are both helpful in data visualization. I shortened each library with its conventional shortcut to make it easier for me to repeatedly access them:
+    pd, plt and sns, respectively. </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+  <b>Data</b> <br>
+    I downloaded the available data from Codecademy for this project: two .csv files called “species_info” and “observations.”
+    I loaded the files using pandas and started by taking a look at the “columns” of each data frame.
+    I saw that the file “species_info” contained information about different species of animals and plants.
+    This included their scientific and common names, and their conservation status.
+    The file “observations” contained information about how many times each species was observed in the four national parks mentioned above. </p>
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/data_frames_head.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+  <b>Project Questions</b> <br>
+    Since this project did not have a specific goal, hypothesis or research question yet, I came up with a list of questions I would try to answer with my analysis.
+    What questions seemed important to ask, given what I had? What did I want to know? What questions would lead me to interesting findings?
+    Since this is a practice project and I don't have a specific question I want to answer from the start,
+    I decided not to limit myself and allow myself to form more questions as I went along and saw the data. 
+    As I continue tracing my steps, I will start each section with the question I aimed to answer. Let's begin. </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+  <b>Data Exploration and Analysis | walkthrough</b> <br>
+    My first question was very straightforward: how big of a dataset am I working with?
+    From simply looking at the data frames, I already knew that species_info had 4 columns and observations had 3 columns
+    (“columns” = types of information). But I didn't know how many instances were recorded.
+    I used .shape to check the size of both datasets; this function returns a tuple with the number of rows and columns, respectively, in the data.
+    For instance, an output of (2, 3) would indicate your dataframe has 2 rows (instances/observations) and 3 columns (types of information).
+    Using .shape on species_info and observations, I got the outputs (5824, 4) and (23296, 3). So these data frames had 5824 and 23296 rows respectively.
+    That's a lot of rows! This led me to my next question. </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I then wondered whether the data could be cleaned? (i.e. were there any duplicates?)
+    With a dataset such as this one, the term “duplicate” might be misleading.
+    Since there are many categories in each data frame, I had to decide which duplicate values would be necessary to clean.
+    So when categorizing my “duplicates,” I only wanted to view duplicates that I would eventually want to remove from the data to clean up.
+    For example, if there were two rows of "Bos bison" in the observations data, but they were observed in different parks,
+    I wouldn't want to get rid of them; if they were observed in different parks, even though their common and scientific names appear as duplicates,
+    they are not the same. So in what column(s) should I search for duplicates that could point me towards an error I'd like to clean up? </p>
+
+  <ul style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <li>In species_info, for me to consider something duplicated, at least the scientific and common names should be identical.
+        This way, if there are multiple rows recorded of the same species, I can then check whether there are any differences in the other columns
+        (i.e. same species but entries with different conservation status).</li>
+    <li>In observations, on the other hand, the name and park information should be identical for me to check these rows
+        (i.e. if the same species observed in the same park is accidentally stored in two separate instances.) </li>
+  </ul>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      duplicate_species_info = species_info[species_info.duplicated(subset=['scientific_name', 'common_names'], keep=False)]
+      duplicate_count_species_info = duplicate_species_info.shape[0]
+      print(duplicate_count_species_info)
+      print(duplicate_species_info)
+    </code>
+  </pre>
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/species_info_duplicates.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+  
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    There were 2 pairs of duplicates: two entries for rainbow trout and two for gray wolf.
+    The only difference between the duplicates in each case was the conservation status.
+    I will come back to these inconsistencies soon, but before that I viewed the duplicates in my other data frame. </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I viewed the duplicates in observations based just on the scientific_name and park_name parameters (for reasons discussed previously).
+    However, observations data proved to be trickier.
+    There were 2228 duplicates based on scientific_name and park_name. 
+    In species_info, I only had 4 rows to consider so it was easy for me to just take a look at each entry and draw conclusions. 
+    Here, however, I needed to narrow down my search. 
+    The only remaining column in this data frame was observations, which made me understand that whatever difference exists between duplicates (if at all), would be the number of observations.
+    So if I could see how many rows are exact replicates (all three columns exactly identical, including number of obs),
+    then I could immediately eliminate them and focus on understanding the differences in the remaining rows. </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      duplicate_observations = observations[observations.duplicated(subset=['scientific_name', 'park_name', 'observations'], keep=False)]
+      duplicate_count_observations = duplicate_observations.shape[0]
+      print(duplicate_observations)
+      print(duplicate_count_observations)
+    </code>
+  </pre>
+    
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    There were 30 rows where all parameters were exactly the same. This meant that these rows were exact replicates and could be cleaned up.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Removing these duplicates from the original observations data frame
+      observations_cleaned = observations.drop_duplicates(subset=['scientific_name', 'park_name', 'observations'], keep = 'first')
+      observations_cleaned.shape
+    </code>
+  </pre>   
+  
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    The output was (23281, 3). <br>
+    My initial observations data frame contained 23296 rows, and I identified 30 duplicates.
+    This means that when I kept the first occurance of each and deleted the duplicate row, I got rid of 15 rows. 23296-15=23281,
+    which is the number of rows of observations_cleaned, so it makes sense! I also confirmed this with the following line of code, which outputs True:
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      observations.shape[0] - observations_cleaned.shape[0] == 15
+    </code>
+  </pre> 
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Now, in my cleaned observations data, the only duplicates are those with the same species name and park name, yet with different observation values.
+    I decided to continue by keeping one row of each species-park combination, and setting the observation value to the average value of all its duplicates.
+  </p>
+  
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      observations = observations_cleaned
+      #Aggregate
+      observations_aggr = observations.groupby(['scientific_name', 'park_name'], as_index=False).agg({'observations': 'mean'})
+      observations_aggr.shape
+      observations = observations_aggr
+    </code>
+  </pre> 
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Now the observations data was cleaned of all duplicates.
+    So I went back to the problem of duplicates in the species_info data frame.
+    My first question was: Why would a species have different conservation statuses reported? <br>
+    This data frame is simple with only 2 such cases so I decided to answer this on a case by case basis and simply use my logic to make a decision on how to proceed.
+    The first inconsistency was for "Rainbow Trout," where one row stated that it was threatened, and the other row had NaN as the conservation status.
+    I was unsure about what the "NaN" represented, especially whether it meant there was no available data or that the species was not in any danger.
+    Either way, I decided to be on the safer side and assume more threatened whenever I had two options.
+    So I decided to remove the "NaN" row and consider the Rainbow Trout to be threatened.
+    Similarly, the second inconsistency was for "Gray Wolf," where one row marked it as endangered and the other stated it was in recovery.
+    I was hesitant to make a choice between endangered and in recovery, so I decided to join these two together in one row to represent both statuses.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Define a function that can do this concatenation of conservation statuses and remove the NaN:
+      def concatenate_conservation_status(conservation_status):
+      unique_row = set(conservation_status.dropna())
+      return ', '.join(unique_row)
+
+      #Now input into this function the duplicates you want to work with from species_info. Remember these were saved in duplicate_species_info.
+      consolidated_conservation_statuses = duplicate_species_info.groupby('scientific_name')['conservation_status'].apply(concatenate_conservation_status).reset_index()
+      consolidated_conservation_statuses
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/combined_cons.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Now both observations and species_info were cleaned from duplicates. My initial exploration of the data was finished and I wanted to now look into what actual information I could get out of this data.
+    <br>
+    To investigate the data further, I decided to focus more on the column called "category" in species_info, which really intrigued me.
+    I wanted to see how many categories there were in the data, what they were, and if any of them stood out in any way.
+    I visualized the categories and how many species belonged to each, using matplotlib.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      category_counts = species_info['category'].value_counts().reset_index()
+      category_counts.columns = ['category', 'species_count']
+      category_counts
+
+      #Visualize
+      colors = sns.color_palette("pastel", len(category_counts))
+      plt.bar(category_counts['category'], category_counts['species_count'], color=colors)
+      #Edit axes and title:
+      plt.xlabel('Category')
+      plt.ylabel('Species Count')
+      plt.title('Number of species by category in US National Parks')
+      plt.xticks(rotation=45)
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/category_counts.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    There are so many more vascular plant species recorded than species in other categories!
+    But does that mean there are more vascular plants observed than other species in general?
+    It is reasonable to assume so, however it could also be that although vascular plants includes more number of species,
+    they are rare compared to other species and therefore not observed at a much higher frequency. I wanted to see which is the case.
+  
+    To do this, I needed to plot categories once again, but this time viewing observations rather than species count.
+    But the information I needed for this graph was split across two data frames. 
+    So I had to first merge them on the column that's common between them, which was the column "scientific_name."
+    This way I got a single, large data frame that contained all of the information.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Merge first
+      merged_data = pd.merge(observations, species_info[['scientific_name', 'category']], on='scientific_name', how='left')
+      category_first = ['category'] + [column for column in merged_data if column != 'category']
+      merged_data = merged_data[category_first]
+      merged_data #to see it
+
+      #Create a count of observations for each category, just like we did with category_counts above
+      category_observations = merged_data.groupby('category')['observations'].sum().reset_index()
+      #Need to make sure categories are ordered in the same way so our graphs are consistent
+      category_observations = pd.merge(category_observations, category_counts, on='category')
+      category_observations = category_observations.sort_values(by='species_count', ascending=False)
+
+      plt.bar(category_observations['category'], category_observations['observations'], color = colors)
+
+      #Edit axes and title:
+      plt.xlabel('Category')
+      plt.ylabel('Observations Count')
+      plt.title('Number of observations by category in US National Parks')
+      plt.xticks(rotation=45)
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/category_obs.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    As expected, the number of observations per category did indeed correspond to the number of species per category.
+    However, I feel it's important to ask whether there are differences in the amount of observations per species.
+    In other words: is there more observations of the category vascular plants because it simply has more species, or are vascular plant species actually more frequent than species of other categories?
+    A simplified example would be if there were 10 vascular plant species, each observed 2 times and 2 fish species, each observed 5 times.
+    The vascular plants overall would have an observation count of 20 as opposed to 10 observations of fish, but the fish species were each observed more times.
+    I wanted to see what the data looked like when I considered individual species as opposed to broad categories.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      full_merge = pd.merge(species_info, observations, on='scientific_name', how='left')
+      #Define function 
+      def find_avg_obs(category):
+        rows_in_category = full_merge[full_merge['category'] == category]
+        avg_obs_species = rows_in_category['observations'].mean()
+        return avg_obs_species
+
+      avg_obs_per_category = []
+      categories = ['Vascular Plant', 'Bird', 'Nonvascular Plant', 'Mammal', 'Fish', 'Amphibian', 'Reptile'] #this is a list we can iterate through!
+      for category in categories: 
+        avg_obs = find_avg_obs(category)
+        avg_obs_per_category.append(avg_obs)
+
+      #Visualize
+      plt.bar(categories, avg_obs_per_category, color=colors)
+
+      plt.xlabel('Category')
+      plt.ylabel('Average observations')
+      plt.title('Average Observations per Species by Category in US National Parks')
+      plt.xticks(rotation=45)
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/avg_obs_by_species.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Now it was clear that even though vascular plants had a lot more observations than other categories,
+    it was due to it having more species within it; the observations per species are very similar across all categories.
+  
+    But how do the parks play into all of this?
+    I added another layer to investigate how these observations were distributed across parks.
+    First, I wanted to see the exact count of observations for every species in every park.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      grouped = full_merge.groupby(['park_name', 'category'])['observations'].sum().reset_index()
+
+      plt.figure(figsize=(10,7))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.barplot(
+        x=grouped['park_name'],
+        y=grouped['observations'],
+        hue=grouped['category'],
+        dodge=True,
+        width = 0.7,
+        palette='pastel'
+      )
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      ax.set_yscale('log')
+      plt.ylabel('Count of observations')
+      plt.title('Count of Observations per Park by Category')
+      plt.legend(title='Categories')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/obs_park_cat.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #How are observations distributed?
+      plt.figure(figsize=(10,7))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.boxplot(
+          x=full_merge['observations'],
+          y=full_merge['park_name'],
+          hue=full_merge['category'],
+          dodge=True,
+          width = 0.5,
+          palette='bright'
+      )
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.xlabel('Observations')
+      plt.title('Distribution of Observations per Park by Category')
+      plt.legend(title='Categories')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/boxplot1.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    According to these plots, vascular plants had more observations across all parks (makes sense based on previous analysis), followed by birds, nonvascular plants and mammals.
+    Yellowstone National Park had the most number of observations overall, which is easier to observe via the boxplot. 
+    I went ahead and generated more plots for further analysis.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      plt.figure(figsize=(10,7))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.boxplot(
+        x=full_merge['observations'],
+        y=full_merge['park_name'],
+        hue=full_merge['conservation_status'],
+        dodge=True,
+        width = 0.5,
+        palette='pastel'
+      )
+
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.xlabel('Observations')
+      plt.title('Distribution of Observations per Park by Conservation Status')
+      plt.legend(title='Parks')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/boxplot2.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    This was an interesting graph because while it confirmed that Yellowstone had most observations across all conservation status groups,
+    it also showed the distribution of different conservation statuses observed across parks.
+    It seemed like Yellowstone had a lot of species of concern observed, however since Yellowstone also had the greatest overall observations as noted before,
+    I wanted to see the same graph, normalized to the total number of observations in each park, before drawing any conclusions.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      total_obs_per_park = full_merge.groupby('park_name')['observations'].sum().reset_index()
+      total_obs_per_park.columns = ['park_name', 'total_observations']
+
+      full_merge_normalized = pd.merge(full_merge, total_obs_per_park, on='park_name')
+      full_merge_normalized['normalized_observations'] = full_merge_normalized['observations'] / full_merge_normalized['total_observations']
+
+      plt.figure(figsize=(10,7))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.boxplot(
+        x=full_merge_normalized['normalized_observations'],
+        y=full_merge_normalized['park_name'],
+        hue=full_merge_normalized['conservation_status'],
+        dodge=True,
+        width = 0.5,
+        palette='pastel'
+      )
+      
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.xlabel('Observations')
+      plt.title('Distribution of Observations per Park by Conservation Status, Normalized to Total Observations per Park')
+      plt.legend(title='Conservation status')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/boxplot3.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    With the data normalized to overall observations per park, I could see that the species of concern observed in Yellowstone wasn't so different than those in other parks.
+    However, in every park, species of concern were most observed, followed by species in recovery, threatened species, and finally of course, endangered species.
+    I brought my attention back to the categories of species.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      plt.figure(figsize=(10,7))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.boxplot(
+        x=full_merge['observations'],
+        y=full_merge['category'],
+        hue=full_merge['conservation_status'],
+        dodge=True,
+        width = 0.5,
+        palette='pastel'
+      )
+      
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.xlabel('Observations')
+      plt.title('Distribution of Observations per Category by Conservation Status')
+      plt.legend(title='Conservation status')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/boxplot4.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I found this plot very interesting, because it showed that not every category contained species of each conservation status, which is good to know!
+    There were species of concern in every category, however nonvascular plants didn't have any observations for species of other conservation statuses,
+    and the only categories that had observations of species 'in recovery' were birds and mammals.
+    However, as I had seen before, there were many species that did not have a conservation status specified, indicated by "nan."
+    So not every single species reported for nonvascular plants was necessarily a species of concern (could be NaN),
+    but as before, I was more interested in threatened species so although I decided to still keep these rows in the data frame,
+    I wouldn't include them (naturally) in any analysis that focused on conservation status. (i.e. I didn't treat 'NaN' as a separate conservation status on its own, but instead as a lack of status.)
+    
+    (same for every category)
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Then, I wanted to narrow down my analysis a little bit.
+    The categories that interested me the most, based on the analysis so far, were the mammals and birds;
+    the mammals because they uniquely contained species observations from each conservation status,
+    and birds because they seemed to have many species in recovery, which is a conservation status I find to be interesting.
+    Again, since this was a practice project, I shaped my goals based on what I thought would be most interesting to look at as I went along! 
+    If I was doing a project with a specific purpose like exploring reptiles, I would focus on that category. 
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      total_obs_per_category = full_merge.groupby('category')['observations'].sum().reset_index()
+      total_obs_per_category.columns = ['category', 'total_observations']
+
+      full_merge_normalized = pd.merge(full_merge, total_obs_per_category, on='category')
+      full_merge_normalized['normalized_observations'] = full_merge_normalized['observations'] / full_merge_normalized['total_observations']
+
+      mammal_and_bird = full_merge_normalized[full_merge_normalized['category'].isin(['Bird', 'Mammal'])]
+
+      plt.figure(figsize=(8,6))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.boxplot(
+        x=mammal_and_bird['observations'],
+        y=mammal_and_bird['category'],
+        hue=full_merge_normalized['conservation_status'],
+        dodge=True,
+        width = 0.5,
+        palette='pastel'
+      )
+
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.xlabel('Observations')
+      plt.title('Distribution of Observations of Mammals and Bird by Conservation Status, Normalized to Total Observations per Category')
+      plt.legend(title='Conservation status')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/boxplot5.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Looking at this normalized distribution of mammal and bird species, I found it interesting once again that birds have this population of species in recovery.
+    I wanted to narrow down my analysis even more and focus now on better understanding these species of birds. 
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      birds = full_merge[full_merge['category']=='Bird']
+      birds_total_obs = birds['observations'].sum()
+      birds
+
+      def find_total_obs(cons_status):
+        rows_in_cons_status = birds[birds['conservation_status'] == cons_status]
+        total_obs = rows_in_cons_status['observations'].sum()
+        return total_obs
+
+      #I know already that birds have 3 different recorded conservation statuses (ignoring any NAN values)
+      birds_conservation = ['Species of Concern', 'Endangered', 'In Recovery']
+      birds_conservation_obs = []
+      for cons in birds_conservation:
+        total_observations = find_total_obs(cons)
+        birds_conservation_obs.append(total_observations)
+
+      colors = ['skyblue', 'plum', 'gold']
+
+      plt.figure(figsize=(5,5))
+      plt.pie(
+        birds_conservation_obs,
+        labels=birds_conservation,
+        colors=colors,
+        autopct='%1.1f%%',
+        startangle=15,
+      )
+
+      plt.title('Proportion of bird species with different conservation statuses')
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/pie1.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      birds_in_recovery = birds[birds['conservation_status']=='In Recovery']
+      birds_in_recovery
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/recovery_birds.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    As shown, there were 12 instances recorded as birds in recovery.
+    However, this does not mean 12 species; as also observed simply by looking at the table, there were only 3 species in recovery:
+    the bald eagle, the American Peregrine Falcon and the Brown Pelican. 
+    So I wanted to learn more about these three species.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      def find_total_obs(species):
+      rows_species = birds[birds['scientific_name'] == species]
+      total_obs = rows_species['observations'].sum()
+      return total_obs
+
+      bird_species = ['Haliaeetus leucocephalus', 'Falco peregrinus anatum', 'Pelecanus occidentalis']
+      bird_species_obs = []
+      for bird in bird_species:
+        total_observations = find_total_obs(bird)
+        bird_species_obs.append(total_observations)
+
+      colors = ['skyblue', 'plum', 'gold']
+
+      plt.figure(figsize=(5,5))
+      plt.pie(
+        bird_species_obs,
+        labels=bird_species,
+        colors=colors,
+        autopct='%1.1f%%',
+        startangle=90,
+      )
+
+      plt.title('Bird species in recovery across national parks')
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/pie2.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      grouped = birds_in_recovery.groupby(['scientific_name', 'park_name'])['observations'].sum().reset_index()
+
+      plt.figure(figsize=(8,6))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.barplot(
+        x=grouped['scientific_name'],
+        y=grouped['observations'],
+        hue=grouped['park_name'],
+        dodge=True,
+        width = 0.5,
+        palette='pastel'
+      )
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      ax.set_yscale('log')
+      plt.ylabel('Count of observations')
+      plt.title('Count of Observations of Species in Different Parks')
+      plt.legend(title='Parks')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/recovery_bar1.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Once again want to do a normalization step to account for the difference in total observations per park
+
+      birds_in_recovery_normalized = pd.merge(birds_in_recovery, total_obs_per_park, on='park_name')
+      birds_in_recovery_normalized['normalized_observations'] = birds_in_recovery_normalized['observations'] / birds_in_recovery_normalized['total_observations']
+
+      plt.figure(figsize=(8,6))
+      plt.subplots_adjust(hspace=0.25, wspace=0.3)
+      ax = sns.barplot(
+        x=birds_in_recovery_normalized['scientific_name'],
+        y=birds_in_recovery_normalized['normalized_observations'],
+        hue=birds_in_recovery_normalized['park_name'],
+        dodge=True,
+        width = 0.5,
+        palette='pastel'
+      )
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      ax.set_yscale('log')
+      plt.ylabel('Count of observations')
+      plt.title('Count of Observations of Species in Different Parks, Normalized to Total Observations per Park')
+      plt.legend(title='Parks')
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/recovery_bar2.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    As I expected, normalization revealed that although Yellowstone might have the highest raw counts of observations for these species,
+    they don't make up a significantly bigger part of the park's total observations when compared to other parks.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Some other interesting points:
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    -> Observations of Pelecanus occidentalis are very few in Great Smoky Mountains National Park. <br>
+    -> Observations of Falco peregrinus anatum are very high in Yosemite National Park. <br>
+    -> Despite having the most observations among all parks, Yellowstone doesn't seem to contain a particularly high ratio of observations
+    for either of these three species of birds in recovery compared to other parks. <br>
+    -> There is no park that contains the highest number of observations of all three species, instead,
+    each species is observed at the highest ratio in a different park.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    My attention was grabbed most by the fact that Pelecanus occidentalis observations are very low in the Great Smoky Mountains.
+    I wanted to understand why this might be... So I shifted my focus towards this observation.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Let's just focus on this one species for now
+      pelecanus_occidentalis = birds_in_recovery_normalized[birds_in_recovery_normalized['scientific_name']=='Pelecanus occidentalis']
+      pelecanus_occidentalis
+
+      plt.figure(figsize=(4,6))
+      ax = sns.barplot(
+        x=pelecanus_occidentalis['park_name'],
+        y=pelecanus_occidentalis['normalized_observations'],
+        color='sandybrown',
+        width = 0.3,
+      )
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.ylabel('Count of observations')
+      plt.title('Normalized observations of Pelecanus occidentalis across parks')
+      plt.xticks(rotation=60)
+      plt.tight_layout()
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/recovery_bar3.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    This graph now highlights the specific point I was interested in: the observations of Pelecanus occidentalis is lower in the Great Smoky Mountains compared to OTHER PARKS?
+    (later, I also analyzed its difference in observations compared to other species in the same park).
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I wanted to see whether this difference that I observed visually was also statistically significant. I decided to perform a t-test. 
+    I generated my null hypothesis: There is no significant difference between the observations of Pelecanus occidentalis in Great Smoky Mountains and other parks.
+    i.e. any difference observed is purely due to chance.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      obs_gsm = pelecanus_occidentalis[pelecanus_occidentalis['park_name']=='Great Smoky Mountains National Park']['normalized_observations']
+      obs_other = pelecanus_occidentalis[pelecanus_occidentalis['park_name']!='Great Smoky Mountains National Park']['normalized_observations']
+
+      #Assumption: two values are independent (observations in one park does not affect another)
+      from scipy.stats import ttest_ind
+
+      #Perform t-test
+      t_stat, p_value = ttest_ind(
+        obs_gsm,
+        obs_other,
+        equal_var=True
+      )
+
+      print("t-statistic:", t_stat)
+      print("p-value:", p_value)
+    </code>
+  </pre> 
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    The output showed a t-statistic of -2.5400657568087652 and a p-value of 0.1262907976827714. <br>
+    Considering this p-value (0.13 > 0.05), I concluded that the difference noted in the observations of Pelecanus occidentalis
+    in the Great Smoky Mountains National Park compared to other parks was NOT statistically significant.
+    This means that the difference observed could be due to random variation or limitation of sampling. Good to know!
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    But what about the difference of the observations of this species compared to other species in the Great Smoky Mountains?
+    Now, I wanted to compare the observations of Pelecanus occidentalis in the Great Smoky Mountains to OTHER SPECIES at the same park.
+    I started by generating another simple graph that visually highlights only this difference that I was now interested in.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Let's just focus on the Great Smoky Mountains National Park now...
+      gsm = birds_in_recovery_normalized[birds_in_recovery_normalized['park_name']=='Great Smoky Mountains National Park']
+      
+      plt.figure(figsize=(4,5))
+      ax = sns.barplot(
+        x=gsm['scientific_name'],
+        y=gsm['normalized_observations'],
+        color='sandybrown',
+        width = 0.3,
+      )
+      ax.set_xlabel('')
+      ax.set_ylabel('')
+      plt.ylabel('Count of observations')
+      plt.title('Normalized observations of bird species in recovery in the Great Smoky Mountains')
+      plt.xticks(rotation=90)
+      plt.tight_layout()
+      plt.show()
+
+
+      #Another way to show the same data (piechart) that I actually prefer:
+    def find_total_obs(species):
+      rows_in_species = gsm[gsm['scientific_name'] == species]
+      total_obs = rows_in_species['observations'].sum()
+      return total_obs
+
+    bird_species = ['Haliaeetus leucocephalus', 'Falco peregrinus anatum', 'Pelecanus occidentalis']
+    bird_species_obs = []
+    for spec in bird_species:
+      total_observations = find_total_obs(spec)
+      bird_species_obs.append(total_observations)
+
+    colors = ['skyblue', 'plum', 'gold']
+
+    plt.figure(figsize=(4,4))
+    plt.pie(
+      bird_species_obs,
+      labels=bird_species,
+      colors=colors,
+      autopct='%1.1f%%',
+      startangle=15,
+    )
+
+    plt.title('Proportion of bird species in recovery in the Great Smoky Mountains')
+    plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/recovery_bar4.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    New Null Hypothesis: There is no significant difference between the observations of Pelecanus occidentalis and other in-recovery bird species in
+    the Great Smoky Mountains National Park.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      obs_pelecanus = gsm[gsm['scientific_name']=='Pelecanus occidentalis']['normalized_observations']
+      obs_other = gsm[gsm['scientific_name']!='Pelecanus occidentalis']['normalized_observations']
+
+      #Assumption: two values are independent (observations in one park does not affect another)
+      from scipy.stats import ttest_ind
+
+      #Perform t-test
+      t_stat, p_value = ttest_ind(
+        obs_pelecanus,
+        obs_other,
+        equal_var=True
+      )
+
+      print("t-statistic:", t_stat)
+      print("p-value:", p_value)
+    </code>
+  </pre> 
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    The output shows a t-statistic of -13.85640646055103 and a p-value of 0.04586455893902986. 
+    Interesting! Now, the p-value (0.046 < 0.05) did incicate that this difference was statistically significant.
+    So I can say with confidence that there are less Pelecanus occidentalis observed in the Great Smoky Mountains 
+    than other bird species in recovery.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Finally, before I concluded this project, I wanted to shify my focus to bird species that didn't have a recorded conservation status.
+    Previously, I had ignored these species because I was interested specifically in birds in recovery.
+    However, I did notice that there were many bird species observed that didn't have a conservation status noted, and I didn't want to overlook this aspect of the data.
+
+    First, I wanted to see how much of the total birds population this group made.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      birds_nan = birds[birds['conservation_status'].isna()]
+      birds_other = birds[birds['conservation_status'].notna()]
+      birds_nan_count = birds_nan['observations'].sum()
+      birds_other_count = birds_other['observations'].sum()
+      def find_total_obs(cons):
+        if cons == 'NaN':
+          return birds_nan_count
+        else:
+          return birds_other_count
+
+      obs_values = [birds_nan_count, birds_other_count]
+      labels = ['NaN', 'Other']
+
+      colors = ['skyblue', 'gold']
+
+      plt.figure(figsize=(5,5))
+      plt.pie(
+        obs_values,
+        labels=labels,
+        colors=colors,
+        autopct='%1.1f%%',
+        startangle=90,
+      )
+
+      plt.title('Proportion of NaN vs. Other Conservation Statuses of Birds Across National Parks')
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/recovery_pie3.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Almost 90% of all birds have 'NaN' as their conservation_status!! It was a very good decision to not ignore this population completely. 
+    I was still hesitant to assign a specific conservation status to this group since I didn't know what exactly 'NaN' implied,
+    so I decided to simply investigate this group on its own. 
+    Since they make up such a large chunk of all birds, I assumed their patterns would be similar to the birds population in general, which I had already analyzed.,
+    But still, I wanted to take a look so I visualized their distribution across parks.
+  </p>
+ 
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      birds_nan = birds[birds['conservation_status'].isna()]
+      birds_other = birds[birds['conservation_status'].notna()]
+      birds_nan_count = birds_nan['observations'].sum()
+      birds_other_count = birds_other['observations'].sum()
+      def find_total_obs(cons):
+        if cons == 'NaN':
+          return birds_nan_count
+        else:
+          return birds_other_count
+
+      obs_values = [birds_nan_count, birds_other_count]
+      labels = ['NaN', 'Other']
+
+      colors = ['skyblue', 'gold']
+
+      plt.figure(figsize=(5,5))
+      plt.pie(
+        obs_values,
+        labels=labels,
+        colors=colors,
+        autopct='%1.1f%%',
+        startangle=90,
+      )
+
+      plt.title('Proportion of NaN vs. Other Conservation Statuses of Birds Across National Parks')
+      plt.show()
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/nan1.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Distribution of birds_nan observations in each park
+      g = sns.FacetGrid(
+        birds_nan,
+        col = 'park_name',
+        col_wrap = 2,
+        height = 4,
+        aspect = 1.5
+      )
+      g.map(sns.histplot, 'observations', bins=20, kde=True, color='black') #setting the kde line color first
+      g.map(sns.histplot, 'observations', bins=20, kde=False, color='pink') #bars color here
+      g.set_axis_labels('', 'Observations/Total Park Observations')
+
+      plt.show()    
+    </code>
+  </pre> 
+
+  <div style="text-align: center;">
+    <img src="images/biodiversity/fin_dist.png" alt="data" width="200" height="200" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    All the parks had a similar, bell-curve-like distribution with minor differences in range when normalized to total park observations (not shown).
+  </p>
+
 </body>
 </html>
