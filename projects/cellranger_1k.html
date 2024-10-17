@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merve Ozdemir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito Sans', Arial;
+    }
+    </style>
+</head>
+
+<body>
+
+  <p class="centered" style="text-align:center;">
+    <a href="../index.html">home</a> | 
+    <a href="../about.html">about</a> |
+    <a href="../projects.html">projects</a>
+  </p> 
+
+  <div style="text-align: center;">
+    <img src="../images/cellranger_1k/head.jpg" alt="head" width="200" height="200" style="margin-top:10px;">
+    <h1 style="color: #242223; font-size: 35px; margin-top: 5px;">Cell Ranger Count Pipeline on 1k PBMC Dataset</h1>
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    This is the first part of a practice project where I analyzed a dataset of 1K healthy PBMCs, focusing on gene expression analysis. 
+    In this first part, I used cellranger count, a pipeline by 10X Genomics, for primary analysis including filtering, alignment, barcode and UMI counting.
+    I used the FASTQ files as input and successfully ran cellranger count using a script I had previously prepared.
+    Here, I discuss one of the output files of the run,
+    which is the html file ("web summary").
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    To read about the second part of the practice project which involves the actual gene expression analysis using Seurat,
+    please head over to the corresponding page. I didn't include any code for Part I, however to access all my code for Part II, please check my Github.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <b>Running and understanding cellranger count</b> <br>
+    In this project, I downloaded a publicly available dataset of 1K PBMCs from the blood of a healthy donor, available via 10X Genomics datasets.
+    The samples were 'sequenced on Illumina NovaSeq with approximately 54,000 reads per cell.'
+    I downloaded the FASTQ files as input and confirmed that their naming convention made sense. 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    pbmc_1k_v3_fastqs/ <br>
+    pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R2_001.fastq.gz <br>
+    pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_I1_001.fastq.gz <br>
+    pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R1_001.fastq.gz <br>
+    pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R1_001.fastq.gz <br>
+    pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R2_001.fastq.gz <br>
+    pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_I1_001.fastq.gz <br>
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Since these are all from the same sample, the sample name “pbmc_1k_v3” is the same in each.
+    These seem to have been run on 2 lanes (L001 and L002), indicated by the next part of the name.
+    Finally, the R1, R2 and I1 codes at the end of the file names refer to the type of information each contains (i.e. the types of reads). <br>
+    -> R1: the first read in paired-end sequencing, containing the cell barcode and UMI sequences <br>
+    -> R2: the second read in paired-end sequencing, containing the actual mRNA sequence captured from the cell <br>
+    -> 1: the index read, containing the sample index for sample identification <br>
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Next, I downloaded a reference genome from the 10X genomics References page.
+    The reference genome I chose was the most recent human reference needed for cellranger: "Human reference (GRCh38) - 2024-A."
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Cell Ranger has three primary analysis pipelines: multi, count and vdj.
+    Depending on the library type, it is possible to choose one that works best for your purpose.
+    Here, I am only interested in gene expression data so I chose to run cellranger count. 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Before running the pipeline, I needed to specify some parameters: id, fastqs, transcriptome and sample. 
+    Here, the “id” will become the name of the run, which you can freely decide.
+    The “fastqs” needs to specify the path to the FASTQ files, the “transcriptome” needs to specify the path to the reference genome.
+    The “sample” needs to match the sample name that I identified from the FASTQ naming (in this case, “pbmc_1k_v3”).
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+   <b>Outputs // Web Summary</b> <br>
+    Once the cellranger count was done running, there were many outputs to consider. However, the most important one for me in this first step was the web summary. 
+    I found the web summary to be a good way to get information about the dataset and do a quick quality control before further analysis.
+    Here, I summarized which sections of the web summary I explored and what they could mean.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    First, I started by looking at the “Summary” section, which gave me general information about the run. 
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/cellranger_1k/Summary.png" alt="head" width="400" height="600" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    I checked that the values are as expected/planned, and the percentages of valid barcodes, valid UMIs and
+    reads mapped to the genome are all above 95%, which is good. Next, I checked the sequencing saturation, which represents 
+    “the fraction of confidently mapped, valid cell-barcode, valid UMI reads that had a non-unique (cell-barcode, UMI, gene).”
+    The sequencing saturation and median genes per well information can actually also be observed separately as graphs at the bottom of the page, both of which look normal in this case, shown below:
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/cellranger_1k/saturation.png" alt="head" width="600" height="400" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Next I looked at the cells & barcode rank plot. 
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/cellranger_1k/Barcode rank.png" alt="head" width="400" height="400" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    To understand this plot, a quick review of some 10X basics: <br>
+    - During the Chromium process, Gel Bead-In Emulsions (GEMs) are created.
+    Each GEM contains one cell (there are always some that contain no cells and some that contain multiplets, but only GEMs with one cell are needed). <br>
+    - GEMs are formed when all the components are encapsulated in an oil droplet.
+    This includes a “barcode,” a unique sequence around 16 nucleotides that identifies the cell, a “UMI” (unique molecular identifier),
+    a random sequence around 10 nucleotides that tags and identifies each individual RNA molecule,
+    and a poly-T sequence that captures mRNA once the cell is lysed and the contents are released inside the droplet. <br>
+    - Then, the mRNA is “tagged” both with the cell barcode and the unique UMI.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    The barcode is useful because it helps identify different RNA reads that originate from the same cell
+    (they will all have the same barcode but different UMI). This is also helpful to distinguish “real” reads and background
+    (e.g. duplicates created during PCR steps, etc). 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    The Barcode Rank Plot shows all the barcodes detected on the x-axis, from highest UMI count to lowest (y-axis).
+    The plot includes both cell-associated barcodes and background, and the density of cell-associated barcodes at any point is shown by the color of the line,
+    where the darker blue shades correspond to higher proportion of cell-associated barcodes and gray shows mostly background.
+    For example, if you look at a specific UMI range and see that the line is dark blue (100% cells), you can understand that at this UMI range,
+    100% of all barcodes were associated with cells. 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    The ideal shape of the plot includes a sudden dip (“a cliff”) that marks the separation of cells and background,
+    as well as a smaller second dip (“a knee”) in a lower UMI range. The output I got above from my cellranger run matches this exactly,
+    so I know that the sample quality was good. A different shape might indicate a loss of quality in GEM creation,
+    problem with the cells/cell counts, or poor barcode counts. 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <b> Gene Expression</b> <br>
+    Next, I switched over to the Gene Expression tab. Here, the first thing I saw was the t-SNE projections.
+    On the left, cells are colored based on UMI counts. A higher UMI count indicates more RNA, which can correspond with the size of the cell.
+    On the right, cells are colored based on clustering (the clustering is based on gene expression profiles).
+    This provides a general summary of the structure of the sample, however one should use the Loupe Browser to further investigate the clustering. 
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/cellranger_1k/tsne.png" alt="head" width="800" height="400" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    I also found a table with information about the features (genes) identified in each cluster, shown below.
+    For every feature, a p-value (statistical significance) and the L2FC (Log2 fold change) is reported.
+    Although it's helpful to view this data in the web summary, the full table is also accessible as a CSV file
+    which is one of the cellranger outputs (“differential_expression.csv”), which I prefer to look at for more details.
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/cellranger_1k/csv.png" alt="head" width="700" height="300" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Since I did not notice anything alarming during these steps I was ready to continue with downstream analysis on this sample.
+    In Part II of this project I use the output files of the cellranger count run and create a Seurat object to analyse the gene expression data.
+    Details about these steps and my code can be found in the corresponding page, and my jupyter notebooks on my Github. 
+  </p>
+
+  <div id="interwebs" style="text-align:center; margin-bottom:20px">
+    <i><p class="centered" style="padding-bottom:10px">find me on other platforms</p></i>
+    <a class="interweb" href="https://github.com/merve-ozdemir"><img src="../images/githublogo.svg" alt="github" width="25" height="25"></a>
+    <a class="interweb" href="https://linkedin.com/in/mozdemir12"><img src="../images/linkedinlogo.webp" alt="linkedin" width="25" height="25"></a>
+  </div> 
+
+</body>
+</html>
