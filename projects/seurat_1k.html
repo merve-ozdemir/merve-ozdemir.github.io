@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merve Ozdemir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito Sans', Arial;
+    }
+    </style>
+</head>
+
+<body>
+
+  <p class="centered" style="text-align:center;">
+    <a href="../index.html">home</a> | 
+    <a href="../about.html">about</a> |
+    <a href="../projects.html">projects</a>
+  </p> 
+
+  <div style="text-align: center;">
+    <img src="../images/seurat_1k/head_painting.png" alt="head" width="200" height="200" style="margin-top:10px;">
+    <h1 style="color: #242223; font-size: 35px; margin-top: 5px;">Cell Ranger Count Pipeline on 1k PBMC Dataset</h1>
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    This is the second part of a practice project where I analyzed a dataset of 1K healthy PBMCs, focusing on gene expression analysis. 
+    In the first part, I used cellranger count, a pipeline by 10X Genomics, for primary analysis including filtering, alignment, barcode and UMI counting. You can read more about these steps in the corresponding page.
+    Here, I continue with further analysis of the same samples, and discuss each step as I go.
+    Since this was a practice run I followed the steps and guidelines provided in a vignette by the Satija Lab, as well as 10X Genomics guidelines for data analysis.
+    To access my full code and Jupyter notebook documentation of the project, please visit my Github.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <b>Seurat analysis of 1K PBMCs</b> <br>
+    Seurat is an R package developed by the Satija Lab in MIT, and it allows researchers to carry out quality control and secondary analysis on single-cell RNA-seq data. <br>
+    Here, I started by installing the necessary packages and loading the libraries, as shown.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      install.packages('Seurat')
+      install.packages('gtable')
+      library(Seurat)
+      library(patchwork)
+      library(dplyr)
+      library(ggplot2)
+    </code>
+  </pre>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Next, I loaded the data using the Read10X(data.dir='') function, where the input is the path to the data. 
+    The "data" in this case refers to the filtered_feature_bc_matrix file, which is one of the outputs of my previous cellranger count run. 
+    Refer to previous page for information about this first step. 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    The Read10X function loads the data, and the next step is to create / initialize a Seurat object. To do this, I used the CreateSeuratObject function which has multiple parameters: count, project, min.cells and min.features. <br>
+    The count parameter refers to the data, so here I specified which data to use for the project (same as previous step). The project parameter simply requires a name for the project, so I set it to "1k_pbmcs." 
+    The min.cells and min.features parameters take numerical values which work as an initial "cleanup" stage where anything below these values will not be included in the data going forward.
+    I set these values to 3 and 200 respectively, which means I am only interested in features that were detected in at least 3 cells, and cells that contain at least 200 features.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    Often, researchers also look at percent mitochondrial RNA at this step; a high percentage might indicate a dying or low quality cell, and therefore can also be cleaned away from the data. 
+    But before filtering, I was interested to see these percentages, so I decided to add another column to my data frame that would show mitochondrial RNA percentage for each sample.
+    I used the PercentageFeatureSet function to do so. <br>
+    Find below the code for all above steps as well as the outputs that show info about my Seurat object and the new column I added about mitochondrial RNA.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Load the data
+      pbmc.data <- Read10X(data.dir='/Users/merveozdemir/Desktop/1kpbmcs_practice/cellranger_outs/filtered_feature_bc_matrix')
+      #Initialize Seurat object
+      pbmc <- CreateSeuratObject(counts = pbmc.data, project = '1k_pbmcs', min.cells = 3, min.features = 200) 
+      pbmc
+
+      #QC metrics for the first 5 cells: Number of molecules and unique genes were calculated during the creation of Seurat object
+      #Adding another metric, which is percentage mitochondrial RNA
+      pbmc[['percent.mt']] <- PercentageFeatureSet(pbmc, pattern = '^MT-')
+      head(pbmc@meta.data, 5)
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/1.png" alt="head" width="400" height="400" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    I then started visualizing my data using different types of plots, shown below. 
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      # Visualize QC metrics as a violin plot
+      VlnPlot(pbmc, features = c('nFeature_RNA', 'nCount_RNA', 'percent.mt'), ncol = 3)
+      #Visualize as scatter plot
+      FeatureScatter(pbmc, feature1 = 'nFeature_RNA', feature2 = 'nCount_RNA')
+    </code>
+  </pre>
+
+    <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+      <img src="../images/seurat_1k/2.png" alt="head" width="900" height="500" style="margin-top:10px;">
+    </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    In my violin plots, I checked that the shape of the distributions looked as expected and there wasn't anything strange I could immediately observe.
+    For instance, a bimodal distribution could indicate the presence of two distinct cell populations or problems with quality. <br>
+    Similarly, I also checked that the majority of the cells fell within a typical range for the number of detected features.
+    Finally, I checked that the percentage of mitochondrial RNA is relatively low for the majority of cells.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    My scatter plot showed nFeature_RNA against nCount_RNA; this means that I plotted the number of features detected per cell against the total number of RNA counts per cell.
+    Since these two values are related, it's important to consider the relationship between them while analyzing this plot. <br>
+    First, I looked at the shape of the scatter plot. Oftentimes I would expect to see a positive correlation, since cells with more features also have more RNA counts. That was the case here, too.
+    There were also other things I looked for, such as cells with high counts but not many features, which could be doublets. I also made sure that all cells weren't populated at the bottom (low counts, low features),
+    as this could indicate issues with quality or “empty” captures. <br>
+    Finally, I noted the value of “0.93” at the top of the plot, which indicates <b>the correlation coefficient.</b>
+    This is a value between -1 and 1, where these lower and upper limits depict a negative and positive correlation, respectively.
+    A value of 0.93 is quite high, so this also confirmed my claim that there is a positive correlation between the count and feature metrics in this dataset.
+    Such correlation is expected in healthy cells, so this was good.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I wanted to do more filtering before I continued, so I decided to continue only with cells that had more than 200 features (as mentioned above) but less than 2500 features, as well as those that had only less than 10% mitochondrial RNA.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Filter PBMCs so that you remove everything with less than 200 or more than 2500 genes, and more than 10% mitochondrial RNA.
+      pbmc_original <- pbmc
+      pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 5000 & percent.mt < 10)
+      pbmc
+    </code>
+  </pre>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+      As a result of my filtering, the Seurat object now had "21092 features across 949 samples within 1 assay."
+      Originally it had 1198 samples, so the filtering process removed 1198-949=249 genes.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    <b>Data Normalization</b>
+    Next, I moved on to data normalization steps. 
+    On the filtered PBMC data, I used Seurat's SCTransform() function, which is a single command that replaces the NormalizeData(), ScaleData() and FindVariableFeatures()
+    commands that I would otherwise run one by one during the normalization process. <br>
+    SCTransform removes noise and corrects for differences in sequencing depth, stabilizes variance across genes and scales gene expression data to allow for easy comparison of gene expression across cells.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      pbmc <- SCTransform(pbmc, assay='RNA', vars.to.regress = "percent.mt", verbose = FALSE)
+    </code>
+  </pre>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Next, I performed dimensionality reduction; Principal Component Analysis (PCA) projects the highly variable genes into principal components (PCs).
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      pbmc <- SCTransform(pbmc, assay='RNA', vars.to.regress = "percent.mt", verbose = FALSE)
+
+      #Perform dimensionality reduction
+      pbmc <- RunPCA(object = pbmc, npcs=20, verbose=FALSE)
+      ElbowPlot(pbmc)
+
+      pbmc <- RunUMAP(object = pbmc, dims=1:12, verbose=FALSE)
+
+      pbmc <- FindNeighbors(pbmc, dims = 1:12, verbose = FALSE)
+      pbmc <- FindClusters(pbmc, resolution=0.5, verbose = FALSE)
+      DimPlot(pbmc, reduction='umap', label = TRUE)
+    </code>
+  </pre>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    To determine a cutoff for the PCs for further analysis, I used the elbow plot I generated (shown below).
+    I looked for the “elbow” of the plot, which occurs around PC 5-7, so I could already choose one of these as the cutoff, but I decided to set the cutoff to 12 in order to include more PCs. <br>
+    Here I also ran UMAP with dims=1:12, identified neighbors and performed clustering on the data. <br>
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/3.png" alt="head" width="500" height="400" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I wanted to now focus more on individual features and clusters.
+    So going forward I focused only on the first three principal components, since these are the most important ones and likely contain sufficient information for most things I would want to do with this data. <br>
+    I used the VizDimLoadings() function on the first three clusters which visualizes the dimensionality loadings of the indicated principal components (in this case, PC 1-3).
+    A “loading” represents the relative contribution of a gene to that principal component. A higher value indicates higher contribution.
+    Identifying important genes that contribute to each PC (e.g. genes that “drive” the variation in the PC) is useful to make sense of variation in the dataset and even analyze the cell types associated with it.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      plot1 <- VizDimLoadings(pbmc, dims = 1, reduction = "pca")
+      plot2 <- VizDimLoadings(pbmc, dims = 2, reduction = "pca")
+      plot3 <- VizDimLoadings(pbmc, dims = 3, reduction = "pca")
+
+      combined_plot <- plot1 | plot2 | plot3
+      combined_plot 
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/4.png" alt="head" width="500" height="600" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Next, I generated a DimPlot based on the PCA dimensionality reduction.
+    Though this looks similar to a cluster plot, it instead shows distribution of cells based on PCA. On the y-axis is PC_2 and on the x-axis is PC_1,
+    which are the two principal components that describe the most variance in gene expression in the data, so it is useful to see the relative distribution of cells between them. <br>
+    However, the PCA DimPlot didn't give me a lot of information about specific clusters or cell types, so for that I instead visualized the clusters on a Cluster DimPlot, shown on the right.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      DimPlot(pbmc, reduction = "pca") + NoLegend()
+      DimPlot(pbmc, reduction='umap', label = TRUE)
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/5.png" alt="head" width="900" height="500" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Here, I could see where each of the eight clusters fell on this DimPlot; some stood out very distinctly (like Cluster 6), and some were closer together (like clusters 7 and 3).
+    I could clearly see how my clusters were distributed relative to each other. Of course, at this point, I didn't have sufficient information about what each cluster was, so I decided try to figure this out. <br>
+
+    Since this dataset consists of PBMCs, I knew the different cell types I expected to find, and there was a lot of literature about marker genes for each of these cell types.
+    I browsed available literature, consulted my experimental notes from different (related) experiments, and identified some marker genes that I could use to uniquely differentiate some cell types.
+    This was just a starting point, as I can always test different genes and modify my genes of interest. 
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I decided to consider the following genes for each cell type below: <br>
+    -> B cells : CD79A <br>
+    -> Monocytes : CST3 <br>
+    -> T cells : CD3D <br>
+    -> NK cells : NCAM1, KLRD1 <br>
+    -> DCs : ITGAX <br>
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I generated feature and violin plots for each of these genes. My hope was that the expression of each gene wouls bw populated in a specific cluster compared to others,
+    therefore helping me identify that cluster as a specific cell type. 
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      features <- c("CD79A", "CST3", "CD3D", "NCAM1", "KLRD1", "ITGAX")
+      FeaturePlot(pbmc, features = features, pt.size = 3, label = TRUE)
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/6.png" alt="head" width="500" height="500" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Based on these plots, it would be reasonable, for instance, to predict that Cluster 3/7 is B cells, Clusters 1,2,5 are all T cells, and Cluster 6 is NK cells. <br>
+    I also visualized the same information as a violin plot, which can be simpler to analyze at first glance.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      VlnPlot(pbmc, features=features)
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/7.png" alt="head" width="500" height="500" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Here, too, I could see which clusters came up more than others for each of these genes. <br>
+    I shifted my focus to B cells only. The signature marker I used to identify this cell type was CD79A, and I saw that both Cluster 3 and Cluster 7 had high expression of this gene.
+    Which one is B cells? Both? What are the differences between them?
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    I performed a differential expression test on Cluster 3, using the FindMarkers() function and I plotted the top hits individually.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      cluster_3_markers <- FindMarkers(pbmc, ident.1=3) #if I provided an ident.2, it would just show the diffrence between two clusters
+      #Plotting the top 6 hits
+      FeaturePlot(pbmc, 
+                  reduction = "umap",
+                  features = rownames(head(cluster_3_markers)), 
+                  pt.size = 1)
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/8.png" alt="head" width="500" height="500" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Just looking at this, I could see that some of these genes were unique to Cluster 3 whereas some were spread between clusters 3 and 7, just like I had seen before with CD79A.
+    From these 6 genes, I would only choose TCL1A and IGHD to be unique markers of Cluster 3. <br>
+    I refered to the human protein atlas website (proteinatlas.org) and searched for these genes.
+    I saw that they are both markers enriched in B cells, while TCL1A is also highly expressed in DCs, and IGHD in plasma cells. I used the atlas to also look up other gene hits.
+  </p>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Finally, I performed full cell type annotation to identify all clusters.
+    I set up the cluster names: "Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono", "NK", "DC", "Platelet", and assigned them to the levels of my Seurat object “pbmc.” <br>
+    As predicted, Cluster 3 turned out to be B cells! 
+  </p>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/9.png" alt="head" width="500" height="500" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    Next I generated some graphs to better visualize the proportion of each cell type in the entire dataset, different than the cluster plots I had been focusing on.
+    I used ggplot2 to generate some plots where I could easily observe this distribution.
+  </p>
+
+  <pre style="margin: 20px auto; max-width: 1000px; white-space: pre-wrap; word-wrap: break-word; background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+    <code>
+      #Extract cell identities (cell types)
+      cell_types <- as.data.frame(Idents(pbmc))
+
+      #Rename the column for clarity
+      colnames(cell_types) <- "cell_type"
+
+      #Calculate proportions of each cell type
+      cell_type_proportions <- cell_types %>%
+        group_by(cell_type) %>%
+        summarise(count = n()) %>%
+        mutate(proportion = count / sum(count))
+
+      # Define a vector of pastel colors
+      colors <- c("#F06292", "#7986CB", "#80DEEA", "#AED581", "#FFE082", "#F8BBD0", "#BCAAA4", "#CE93D8", "#FFF4BA")
+
+      # Create a bar plot with pastel colors
+      ggplot(cell_type_proportions, aes(x = cell_type, y = proportion, fill = cell_type)) +
+        geom_bar(stat = "identity") +
+        labs(title = "Proportions of Each Cell Type", x = "Cell Type", y = "Proportion") +
+        theme_minimal() +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+        scale_fill_manual(values = colors)
+
+      # Create a pie chart with pastel colors
+      ggplot(cell_type_proportions, aes(x = "", y = proportion, fill = cell_type)) +
+        geom_bar(stat = "identity", width = 1) +
+        coord_polar(theta = "y") +
+        labs(title = "Proportions of Each Cell Type") +
+        theme_void() +
+        scale_fill_manual(values = colors)
+    </code>
+  </pre>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/10.png" alt="head" width="500" height="400" style="margin-top:10px;">
+  </div>
+
+  <div style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;">
+    <img src="../images/seurat_1k/11.png" alt="head" width="550" height="400" style="margin-top:10px;">
+  </div>
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    In healthy PBMC samples, the majority of the cells were lymphocytes, especially T cells, followed by B cells and NK cells.
+    Monocytes usually make up 10-20% and DCs are the smallest population. So my data was consistent with these expectations, as shown above.
+  </p>
+
+
+  <p class="centered" style="margin: 20px auto; max-width: 1000px; text-align: left; font-size: large;"> 
+    <b>Conclusion</b> <br>
+    In this practice project, I analyzed a dataset of 1K PBMCs from a healthy donor.
+    I started with cellranger output files and created a Seurat object that I then analyzed through many steps including normalization,
+    dimensionality reduction analysis, differential expression testing and cell type annotation. I used the R packages “Seurat,” “dplyr” and “ggplot2.” <br>
+    What would make this project a lot more interesting would be if I also had a dataset of PBMCs from a non-healthy donor, maybe even more than one (for example:
+    healthy, diagnosis, treatment and remission samples).
+    In this case, I could combine the data and explore the changes in clustering, gene expression and proportion of different cell types across these conditions.
+    I hope to integrate more datasets and more comparative questions like these into future projects.
+  </p>
+  
+
+  <div id="interwebs" style="text-align:center; margin-bottom:20px">
+    <i><p class="centered" style="padding-bottom:10px">find me on other platforms</p></i>
+    <a class="interweb" href="https://github.com/merve-ozdemir"><img src="../images/githublogo.svg" alt="github" width="25" height="25"></a>
+    <a class="interweb" href="https://linkedin.com/in/mozdemir12"><img src="../images/linkedinlogo.webp" alt="linkedin" width="25" height="25"></a>
+  </div> 
+
+</body>
+</html>
