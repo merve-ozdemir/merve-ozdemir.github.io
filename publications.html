@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merve Ozdemir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Nunito Sans', Arial;
+    }
+
+    .pubs {
+      max-width: 760px;
+      margin: 0 auto 60px auto;
+      padding: 0 20px;
+      color: #242223;
+      line-height: 1.55;
+    }
+
+    .year {
+      font-size: 20px;
+      font-weight: 700;
+      color: #242223;
+      border-bottom: 1px solid #e0dedd;
+      padding-bottom: 4px;
+      margin: 35px 0 18px 0;
+    }
+
+    .pub {
+      margin-bottom: 22px;
+      font-size: 15px;
+    }
+
+    .pub .title {
+      font-weight: 600;
+    }
+
+    .pub .title a {
+      color: #242223;
+      text-decoration: none;
+      border-bottom: 1px solid #b9b6b4;
+    }
+
+    .pub .title a:hover {
+      color: #7a6cff;
+      border-bottom-color: #7a6cff;
+    }
+
+    .pub .authors {
+      color: #4a4746;
+    }
+
+    .pub .venue {
+      font-style: italic;
+      color: #4a4746;
+    }
+
+    .pub .me {
+      font-weight: 700;
+      color: #242223;
+    }
+
+    .pub details > summary {
+      list-style: none;
+      cursor: pointer;
+      color: #7a6cff;
+      font-size: 13px;
+      margin-top: 3px;
+      display: inline-block;
+    }
+
+    .pub details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .pub details > summary::after {
+      content: "▸ show all 60 authors";
+    }
+
+    .pub details[open] > summary::after {
+      content: "▾ hide author list";
+    }
+
+    .pub details > summary:hover {
+      text-decoration: underline;
+    }
+
+    .pub details[open] .authors-short {
+      display: none;
+    }
+
+    .full-authors {
+      color: #4a4746;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: #f0eeed;
+      color: #5a5654;
+      border-radius: 3px;
+      padding: 1px 6px;
+      margin-left: 6px;
+      vertical-align: 2px;
+    }
+    </style>
+</head>
+
+<body>
+  <div style="text-align: center;">
+    <img src="images/circleheadshot.png" alt="merve" width="200" height="200" style="margin-top:10px;">
+    <h1 style="color: #242223; font-size: 35px; margin-top: 5px;">Publications</h1>
+  </div>
+
+  <p class="centered" style="text-align:center;">
+    <a href="../index.html">Home</a> | 
+    <a href="../about.html">About</a> |
+    <a href="../projects.html">Projects</a> |
+    <a href="../publications.html">Publications</a>
+  </p>  
+
+  <div class="pubs">
+
+    <div class="year">2025</div>
+
+    <div class="pub">
+      <div class="title">
+        <a href="https://doi.org/10.1038/s41467-025-65134-y" target="_blank" rel="noopener">
+          Remodeling of the immune microenvironment is linked to adverse outcome in pediatric T cell acute lymphoblastic leukemia
+        </a>
+      </div>
+      <div class="authors">
+        Wiggers, C.R.M., Cho, E.Y., <span class="me">Ozdemir, M.</span>, Hegel, J., Frede, J., Warlitz, F., Shraim, R.,
+        Pölönen, P., Mullighan, C.G., Teachey, D.T., Bledsoe, J.R., Pikman, Y., Harris, M.H., Place, A.E.,
+        Silverman, L.B., Lohr, J.G., &amp; Knoechel, B.
+      </div>
+      <div class="venue">Nature Communications</div>
+      <div>16(1), 10263. DOI: <a href="https://doi.org/10.1038/s41467-025-65134-y" target="_blank" rel="noopener">10.1038/s41467-025-65134-y</a></div>
+    </div>
+
+    <div class="pub">
+      <div class="title">
+        <a href="https://doi.org/10.1126/sciadv.ads8351" target="_blank" rel="noopener">
+          Genome-wide CRISPR screen identifies IRF1 and TFAP4 as transcriptional regulators of Galectin-9 in T-cell acute lymphoblastic leukemia
+        </a>
+      </div>
+      <div class="authors">
+        Wiggers, C.R.M., Yuzuguldu, B., Cho, E.Y., Tadros, N.G., Chae, Y.-C., <span class="me">Ozdemir, M.</span>,
+        Eisenbies, Z., Kulp, S., Gutierrez, A., Lohr, J.G., &amp; Knoechel, B.
+      </div>
+      <div class="venue">Science Advances</div>
+      <div>11, eads8351. DOI: <a href="https://doi.org/10.1126/sciadv.ads8351" target="_blank" rel="noopener">10.1126/sciadv.ads8351</a></div>
+    </div>
+
+    <div class="pub">
+      <div class="title">
+        <a href="https://doi.org/10.1101/2025.08.18.670743" target="_blank" rel="noopener">
+          O-mannosylation and protein maturation checkpoints represent therapeutic opportunities in BRAF fusion protein oncogenesis
+        </a><span class="tag">Preprint</span>
+      </div>
+      <div class="authors authors-short">
+        Misek, S.A., Borgenvik, A., Christen, D., Kyrila, G., …, <span class="me">Ozdemir, M.</span>, …, Halim, A., &amp; Bandopadhayay, P.
+      </div>
+      <details>
+        <summary></summary>
+        <div class="full-authors">
+          Misek, S.A., Borgenvik, A., Christen, D., Kyrila, G., Zhang, A., Reel, S., Boisvert, M., Cai, K., Zhou, K.,
+          Gonzales, E.M., Goodale, A., Lazo de la Vega, L., Ragnoni, T.J., Kalani, Z., Persky, N., Abid, T.,
+          Miglietta, E., Vakhrushev, S., Stumpe, M., Jones, J., Malinowski, S., Elsadek, L., Parikh, J.,
+          Condurat, A.L., Fultineer, A., Choi, S.H., <span class="me">Ozdemir, M.</span>, Eisenbies, Z., Lee, J.,
+          Novikov, D., Bahadur, S., Apfelbaum, A., Robinson, J., Tang, K., Maldera, A., Bondeson, D., Kwon, J.,
+          Vallurupalli, M., Jeon, H., Pal, S., Golub, T., Hahn, W.C., Fischer, E., Boehm, J.S., Dengjel, J.,
+          Clausen, H., Jabado, N., Milde, T., Carpenter, A., Cimini, B.A., Ligon, K., Janeway, K., Eck, M.,
+          Root, D., Jones, D.T.W., Phoenix, T.N., Beroukhim, R., Joshi, H.J., Brummer, T., Halim, A.,
+          &amp; Bandopadhayay, P.
+        </div>
+      </details>
+      <div class="venue">bioRxiv</div>
+      <div>DOI: <a href="https://doi.org/10.1101/2025.08.18.670743" target="_blank" rel="noopener">10.1101/2025.08.18.670743</a></div>
+    </div>
+
+    <div class="year">2024</div>
+
+    <div class="pub">
+      <div class="title">
+        <a href="https://doi.org/10.1016/j.celrep.2024.114724" target="_blank" rel="noopener">
+          Hyperactivating EZH2 to augment H3K27me3 levels in regulatory T cells enhances immune suppression by driving early effector differentiation
+        </a>
+      </div>
+      <div class="authors">
+        Peeters, J.G.C., Silveria, S., <span class="me">Ozdemir, M.</span>, Ramachandran, S., &amp; DuPage, M.
+      </div>
+      <div class="venue">Cell Reports</div>
+      <div>43(9), 114724. DOI: <a href="https://doi.org/10.1016/j.celrep.2024.114724" target="_blank" rel="noopener">10.1016/j.celrep.2024.114724</a></div>
+    </div>
+
+  </div>
+
+</body>
+</html>
