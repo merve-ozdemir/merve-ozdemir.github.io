@@ -1,15 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merve Ozdemir</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merve Ozdemir</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Nunito Sans', Arial;
     }
-    </style>
+
+    .centered {
+      margin: 20px auto;
+      max-width: 800px;
+      text-align: left;
+      font-size: large;
+    }
+
+    h5.centered {
+      color: #242223;
+      font-size: 20px;
+    }
+
+    /* research timeline */
+
+    .timeline {
+      list-style: none;
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 0;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0 28px;
+      padding-bottom: 28px;
+      position: relative;
+      font-size: large;
+    }
+
+    .entry::before {
+      content: "";
+      position: absolute;
+      left: 106px;
+      top: 12px;
+      bottom: -8px;
+      width: 1px;
+      background: #ddd;
+    }
+
+    .entry:last-child::before {
+      bottom: auto;
+      height: 0;
+    }
+
+    .entry::after {
+      content: "";
+      position: absolute;
+      left: 103px;
+      top: 9px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #888;
+    }
+
+    .when {
+      text-align: right;
+      position: relative;
+      right: 26px;        /* moves the whole thing left, no reflow */
+      font-size: 15px;
+      color: #6b6b6b;
+      padding-top: 3px;
+      line-height: 1.5;
+    }
+
+    .what h3 {
+      margin: 0;
+      font-size: large;
+      font-weight: 700;
+      color: #242223;
+      line-height: 1.4;
+    }
+
+    .where {
+      display: block;
+      font-weight: 400;
+      font-size: 15px;
+      color: #6b6b6b;
+      margin-top: 3px;
+    }
+
+    .what p {
+      margin: 10px 0 0;
+    }
+
+    @media (max-width: 860px) {
+      .timeline, .centered { padding-left: 16px; padding-right: 16px; }
+      .entry {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding-left: 20px;
+      }
+      .entry::before { left: 0; }
+      .entry::after  { left: -3px; }
+      .when { text-align: left; margin-bottom: 6px; }
+    }
+  </style>
 </head>
 
 <body>
@@ -19,55 +118,123 @@
   </div>
 
   <p class="centered" style="text-align:center;">
-    <a href="../index.html">home</a> | 
-    <a href="../about.html">about</a> |
-    <a href="../projects.html">projects</a> |
-    <a href="../publications.html">publications</a>
-  </p>    
+    <a href="../index.html">Home</a> |
+    <a href="../about.html">About</a> |
+    <a href="../projects.html">Projects</a> |
+    <a href="../publications.html">Publications</a>
+  </p>
 
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;">
-    I'm Merve (pronounced 'Mehr-veh'), a Master's student in Computational Biology & Bioinformatics at ETH Zürich.
-    I started this page when I was a cancer researcher living in Boston, Massachusetts, to document my journey of learning computational tools and methods as a wet-lab biologist.
-    Now, I am improving myself further during my Master's studies and falling in love with bioinformatics even more. </p>
+  <h5 class="centered">Education</h5>
 
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;">
-    In my free time, I love to read, write, paint, and learn new languages! 📚🎨 </p>
+  <p class="centered">
+    I was born and raised in Istanbul, Turkey, where I completed my primary, secondary and high school education.
+    In 2019, after my high school graduation, I moved to the United States to pursue my undergraduate studies at University of California, Berkeley.
+    At UC Berkeley I studied Molecular &amp; Cell Biology with a concentration in Immunology — a choice driven
+    by my long-standing interest in cancer and infectious diseases.
+  </p>
 
-  <h5 class="centered" style="color: #242223; margin: 20px auto; max-width: 800px; font-size: 20px">education</h3>
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;"> 
-    Born and raised in Istanbul, Turkey, I graduated from high school in 2019 and moved to the United States for my undergraduate studies.
-    I studied Molecular & Cell Biology with a concentration in Immunology. Having always had a particular interest in cancer, I learned about the immune system, cancer, and how tumors interact with/shape the immune microenvironments around them.
-    Currently, I am pursuing my Master's studies in Computational Biology and Bioinformatics at ETH Zürich in Zürich, Switzerland. </p>
-  
-  <h5 class="centered" style="color: #242223; margin: 20px auto; max-width: 800px; font-size: 20px">research</h3>
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;">  
-    I have had many opportunities to get involved in research across different labs, institutes and countries, over the years.
+    <p class="centered">
+    In 2023 I graduated from UC Berkeley with a simultaneous (double) degree in Molecular &amp; Cell Biology and in Comparative Literature, as well as a minor in French literature.
+    I completed both programs with honors.
+  </p>
 
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;">    
-    In the second year of my undergraduate studies, I joined the lab of Michel DuPage, where I embarked on my cancer research journey. In the DuPage Lab I worked at the intersection of cancer biology, immunology and epigenetics, to explore ways to selectively reprogram regulatory T cells to enhance anti-tumor immunity while eliminating risk for autoimmune toxicity.
-    I wrote and defended my undergraduate honors thesis about the role of EN101, a cysteine-reactive compound, on Foxp3 regulation in Tregs. </p>
-  
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;"> 
-    In 2023, I graduated from UC Berkeley and moved to Boston to start working at the Dana-Farber Cancer Institute.
-    Here, I joined the lab of Birgit Knoechel, and was introduced to the exciting world of cutting edge single cell sequencing technologies and bioinformatics.
-    I gained experience in single cell RNA-sequencing, particularly in Chromium Single Cell Gene Expression, Cell Surface Protein Expression and TCR/BCR analysis via 10X genomics.
-    In addition to scRNA-seq, I also worked on a CAR T-cell therapy project with a special focus on preventing resistance. </p>
+  <p class="centered">
+    After graduating from Berkeley I moved to Boston to work as a Research Technician at the Dana-Farber Cancer Institute.
+    See research experience below.
+  </p>
 
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;"> 
-    In 2024, I also started working in the Bandopadhayay Lab at the Dana-Farber Cancer Institute. Here, I worked on pediatric low grade glioma, the most common brain and CNS tumors in children. </p>
+  <p class="centered">
+    I am now completing my Master's degree in Computational Biology and Bioinformatics at ETH Zürich in Zürich,
+    Switzerland.
+  </p>
 
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;"> 
-    At ETH Zürich, as a Master's student, I am currently involved in research projects in different groups. This is my first time working on projects that are entirely computational, a big change from my previous wet-lab driven projects. 
-    I have a special interest in and am focusing on the applications of machine learning in different biological contexts related to cancer and infectious diseases. 
-      
-  <h5 class="centered" style="color: #242223; margin: 20px auto; max-width: 800px; font-size: 20px">what's next?</h3>
-  <p class="centered" style="margin: 20px auto; max-width: 800px; text-align: left; font-size: large;"> 
-    I am interested in continuing my learning journey in graduate school. <br> Thank you for following along! 🔬👩🏻‍🔬 </p>
+  <h5 class="centered">Research</h5>
+
+  <p class="centered">
+    I have had many opportunities to get involved in research across different labs, institutes and countries
+    over the years. Check out the "Publications" tab to see a list of published work I was involved in.
+  </p>
+
+  <ul class="timeline">
+
+    <li class="entry">
+      <div class="when">2020 — 2023<br>UC Berkeley</div>
+      <div class="what">
+        <h3>
+          Reprogramming regulatory T cells to enhance anti-tumor immunity
+          <span class="where">DuPage Lab, UC Berkeley</span>
+        </h3>
+        <p>
+          My first research experience was in the DuPage Lab where I spent 2.5 years working
+          at the intersection of cancer biology, immunology and epigenetics, looking for ways to
+          selectively reprogram regulatory T cells without incurring autoimmune toxicity. My honors thesis
+          examined the effect of EN101, a cysteine-reactive compound, on Foxp3 regulation in Tregs.
+        </p>
+      </div>
+    </li>
+
+    <li class="entry">
+      <div class="when">2023 — 2024<br>Boston, MA</div>
+      <div class="what">
+        <h3>
+          Single-cell sequencing and CAR T-cell resistance
+          <span class="where">Knoechel Lab, Dana-Farber Cancer Institute</span>
+        </h3>
+        <p>
+          In my first year at DFCI, in the Knoechel Lab, I was introduced to single-cell
+          sequencing and bioinformatics. I worked across 10x Genomics Chromium single-cell gene expression,
+          cell surface protein expression, and TCR/BCR analyses, alongside a CAR T-cell therapy project
+          focused on preventing resistance.
+        </p>
+      </div>
+    </li>
+
+    <li class="entry">
+      <div class="when">2024 — 2025<br>Boston, MA</div>
+      <div class="what">
+        <h3>
+          Molecular vulnerabilities & Drug delivery in pediatric gliomas
+          <span class="where">Bandopadhayay Lab, Dana-Farber Cancer Institute</span>
+        </h3>
+        <p>
+          In my second year at DFCI I joined the Bandopadhayay Lab, where 
+          I worked on a project characterizing how a BRAF fusion partner drives oncogenesis in pediatric
+           low grade glioma -- the most common pediatric brain tumor. Here, I also worked on a second project
+           to identify biologic regulators of nanoparticle uptake in diffuse midline glioma.
+        </p>
+      </div>
+    </li>
+
+    <li class="entry">
+      <div class="when">2025 — 2026 (6 months)<br>Zürich, CH</div>
+      <div class="what">
+        <h3>
+          Machine learning for cancer and infectious disease
+          <span class="where">Reddy Lab, ETH Zürich</span>
+        </h3>
+        <p>
+          My first fully computational project, after years of wet-lab work, was in the Reddy Lab,
+          where I worked on applying machine learning methods to characterize the TCM-TEM gradient in
+          CAR T Cells using a CD3ζ ITAM mutagenesis library.
+        </p>
+      </div>
+    </li>
+
+  </ul>
+
+  <h5 class="centered">What's next?</h5>
+
+  <p class="centered">
+    I am continuing to work on different research projects as part of my Master's studies.
+    After finishing my Master's thesis, I want to pursue a PhD to continue my learning journey. <br>
+    Stay tuned!
+  </p>
 
   <div id="interwebs" style="text-align:center; margin-bottom:20px">
-    <i><p class="centered" style="padding-bottom:10px">find me on other platforms</p></i>
+    <i><p class="centered" style="text-align:center; padding-bottom:10px">find me on other platforms</p></i>
     <a class="interweb" href="https://github.com/merve-ozdemir"><img src="images/githublogo.svg" alt="github" width="25" height="25"></a>
     <a class="interweb" href="https://linkedin.com/in/mozdemir12"><img src="images/linkedinlogo.webp" alt="linkedin" width="25" height="25"></a>
-  </div> 
-  
-<body>
+  </div>
+
+</body>
+</html>
