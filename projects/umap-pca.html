@@ -9494,31 +9494,8 @@ leiden
 <td><code>perplexity</code></td>
 </tr>
 <tr>
-<td>Good for</td>
-<td>Understanding the main axes of variation; input for the other methods</td>
-<td>Looking at clusters and local neighborhoods</td>
-<td>Looking at clusters and local neighborhoods</td>
-</tr>
-</tbody>
-</table>
-<p><strong>What each picture can tell me.</strong> PCA is the only one of the three whose axes and distances mean something: PC1 is "lymphocytes vs monocytes", PC2 is "B cells vs NK cells", and I can list the genes behind them. Its weakness is that a 2D plot only shows 2 of the 10 PCs, so the CD4 T cell clusters overlapped and the dendritic cells and platelets were hidden. UMAP and t-SNE use all 10 PCs and show every group I found with Leiden, including the 15 platelets, but only the <em>neighborhoods</em> in these plots are reliable.</p>
-<p><strong>What they can't tell me.</strong> In UMAP and t-SNE, the distances between islands, the size of an island and the overall layout change with settings I chose (<code>n_neighbors</code>, <code>min_dist</code>, <code>perplexity</code>), while the data stays exactly the same. In my plots, the same cells could look like tight, clearly separated clumps or like one continuous population. So a UMAP or t-SNE is a good way to <em>look</em> at clusters, but a statement like "these cell types are far apart" or "this population is very varied" needs to be checked in the PCs or in the gene expression itself.</p>
-<p><strong>Limits of this notebook.</strong> This is one dataset, and I fixed several choices along the way (HVG cutoffs, 10 PCs, Leiden resolution 1.0) without testing them. I also compared the plots by eye; I did not measure how well each method keeps the distances of the 10-PC space.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=finalthk">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>In this project, starting from raw counts of 2,700 blood cells, I went through quality control, normalization, feature selection and PCA, and found the main PBMC cell types, from large T cell populations down to 15 platelets. I compared three 2D pictures of the same data. PCA was more intuitive, with its axes and distances meaning something, but it only shows a small part of the data at a time. UMAP and t-SNE show all the groups at once and are good for seeing which cells belong together, but how far apart groups look, how big they look and how they are arranged depends on settings I chose. The main lesson for me is to treat a UMAP or t-SNE as a map of neighborhoods rather than distances, and to check any claim about how different or how varied cell types are against the PCs or the gene expression itself. As always, any feedback is welcome!</p>
-</div>
-</div>
-</div>
-</div>
-</main>
+
+<h2 id="Conclusions">Conclusions</h2>
+<p>In this project, starting from raw counts of 2,700 blood cells, I went through quality control, normalization, feature selection and PCA, and found the main PBMC cell types, from large T cell populations down to 15 platelets. I compared three 2D pictures of the same data. PCA was more intuitive, with its axes and distances meaning something, but it only shows a small part of the data at a time. UMAP and t-SNE show all the groups at once and are good for seeing which cells belong together, but how far apart groups look, how big they look and how they are arranged depends on settings I chose. The main lesson for me is to treat a UMAP or t-SNE as a map of neighborhoods rather than distances, and to check any claim about how different or how varied cell types are against the PCs or the gene expression itself. As always, any feedback is welcome!</p>
 </body>
 </html>
