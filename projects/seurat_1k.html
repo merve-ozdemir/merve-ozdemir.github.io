@@ -1,35 +1,15 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merve Ozdemir</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-  <style>
+<head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+<style>
     body {
       font-family: 'Nunito Sans', Arial;
     }
-    </style>
-</head>
-
-<body>
-  <p class="centered" style="text-align:center;">
-    <a href="../index.html">home</a> | 
-    <a href="../about.html">about</a> |
-    <a href="../projects.html">projects</a> |
-    <a href="../publications.html">publications</a>
-  </p> 
-
-  <div style="text-align: center;">
-    <img src="../images/covers/head_painting.png" alt="head" width="200" height="200" style="margin-top:10px;">
-    <h1 style="color: #242223; font-size: 35px; margin-top: 5px;">Gene expression analysis on 1K healthy PBMC data by 10X Genomics | Seurat (R)</h1>
-  </div>
-</body>
-
-<head><meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>1k_pbmcs_Seurat</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+</style>
+<title>Merve Ozdemir</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7821,6 +7801,18 @@ a.anchor-link {
 </style>
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+  <div style="text-align: center;">
+    <img src="../images/covers/head_painting.png" alt="Pointillist painting of two figures in a park, one holding a red parasol" width="200" height="200" style="margin-top:10px;">
+    <h1 style="color: #242223; font-size: 35px; margin-top: 5px;">Gene expression analysis on 1K healthy PBMC data by 10X Genomics | Seurat (R)</h1>
+  </div>
+
+  <p style="text-align:center;">
+    <a href="../index.html">Home</a> | 
+    <a href="../about.html">About</a> |
+    <a href="../projects.html">Projects</a> |
+    <a href="../publications.html">Publications</a>
+  </p>
+
 <main>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0459b624-7c95-425c-ab58-b901e6b8817d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -7829,7 +7821,7 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>This is the second part of a practice project where I analyzed a dataset of 1K healthy PBMCs, focusing on gene expression analysis. In the first part, I used cellranger count, a pipeline by 10X Genomics, for primary analysis including filtering, alignment, barcode and UMI counting. Here, I continue with further analysis of the same samples, and discuss each step as I go. Since this was a practice run I followed the steps and guidelines provided in a vignette by the Satija Lab, as well as 10X Genomics guidelines for data analysis.</p>
-<p>Seurat is an R package developed by the Satija Lab in MIT, and it allows researchers to carry out quality control and secondary analysis on single-cell RNA-seq data.</p>
+<p>Seurat is an R package developed by the Satija Lab at the New York Genome Center and New York University, and it allows researchers to carry out quality control and secondary analysis on single-cell RNA-seq data.</p>
 </div>
 </div>
 </div>
@@ -7876,7 +7868,7 @@ The downloaded binary packages are in
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-r"><pre><span></span><span class="c1">#Load the data</span>
-<span class="n">pbmc.data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Read10X</span><span class="p">(</span><span class="n">data.dir</span><span class="o">=</span><span class="s">'/Users/merveozdemir/Desktop/1kpbmcs_practice/cellranger_outs/filtered_feature_bc_matrix'</span><span class="p">)</span>
+<span class="n">pbmc.data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">Read10X</span><span class="p">(</span><span class="n">data.dir</span><span class="o">=</span><span class="s">'data/1k_pbmcs/filtered_feature_bc_matrix'</span><span class="p">)</span>
 <span class="c1">#Initialize Seurat object</span>
 <span class="n">pbmc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">CreateSeuratObject</span><span class="p">(</span><span class="n">counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pbmc.data</span><span class="p">,</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">'1k_pbmcs'</span><span class="p">,</span><span class="w"> </span><span class="n">min.cells</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">min.features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">200</span><span class="p">)</span>
 <span class="n">pbmc</span>
@@ -8031,7 +8023,7 @@ Similarly, I also checked that the majority of the cells fell within a typical r
 <p>My scatter plot showed nFeature_RNA against nCount_RNA; this means that I plotted the number of features detected per cell against the total number of RNA counts per cell. Since these two values are related, it's important to consider the relationship between them while analyzing this plot.
 First, I looked at the shape of the scatter plot. Oftentimes I would expect to see a positive correlation, since cells with more features also have more RNA counts. That was the case here, too. There were also other things I looked for, such as cells with high counts but not many features, which could be doublets. I also made sure that all cells weren't populated at the bottom (low counts, low features), as this could indicate issues with quality or “empty” captures.
 Finally, I noted the value of “0.93” at the top of the plot, which indicates the correlation coefficient. This is a value between -1 and 1, where these lower and upper limits depict a negative and positive correlation, respectively. A value of 0.93 is quite high, so this also confirmed my claim that there is a positive correlation between the count and feature metrics in this dataset. Such correlation is expected in healthy cells, so this was good.</p>
-<p>I wanted to do more filtering before I continued, so I decided to continue only with cells that had more than 200 features (as mentioned above) but less than 2500 features, as well as those that had only less than 10% mitochondrial RNA.</p>
+<p>I wanted to do more filtering before I continued, so I decided to continue only with cells that had more than 200 features (as mentioned above) but less than 5000 features, as well as those that had only less than 10% mitochondrial RNA.</p>
 </div>
 </div>
 </div>
@@ -8043,7 +8035,7 @@ Finally, I noted the value of “0.93” at the top of the plot, which indicates
 <div class="jp-InputPrompt jp-InputArea-prompt">In [59]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-r"><pre><span></span><span class="c1">#Filter PBMCs so that you remove everything with less than 200 or more than 2500 genes, and more than 10% mitochondrial RNA.</span>
+<div class="highlight hl-r"><pre><span></span><span class="c1">#Filter PBMCs so that you remove everything with less than 200 or more than 5000 genes, and more than 10% mitochondrial RNA.</span>
 <span class="n">pbmc_original</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pbmc</span>
 <span class="n">pbmc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">subset</span><span class="p">(</span><span class="n">pbmc</span><span class="p">,</span><span class="w"> </span><span class="n">subset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nFeature_RNA</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">200</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">nFeature_RNA</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">5000</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">percent.mt</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10</span><span class="p">)</span>
 <span class="n">pbmc</span>
@@ -8074,7 +8066,7 @@ Active assay: RNA (21092 features, 0 variable features)
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>As a result of my filtering, the Seurat object now had "21092 features across 949 samples within 1 assay." Originally it had 1198 samples, so the filtering process removed 1198-949=249 genes.</p>
+<p>As a result of my filtering, the Seurat object now had "21092 features across 949 samples within 1 assay." Originally it had 1198 samples, so the filtering process removed 1198-949=249 cells (the number of features, i.e. genes, stayed the same).</p>
 <p>Next, I moved on to data normalization steps. On the filtered PBMC data, I used Seurat's SCTransform() function, which is a single command that replaces the NormalizeData(), ScaleData() and FindVariableFeatures() commands that I would otherwise run one by one during the normalization process.
 SCTransform removes noise and corrects for differences in sequencing depth, stabilizes variance across genes and scales gene expression data to allow for easy comparison of gene expression across cells.</p>
 </div>
@@ -8213,7 +8205,7 @@ Also defined by ‘BiocGenerics’
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>To determine a cutoff for the PCs for further analysis, I used the elbow plot I generated (shown below). I looked for the “elbow” of the plot, which occurs around PC 5-7, so I could already choose one of these as the cutoff, but I decided to set the cutoff to 12 in order to include more PCs.
+<p>To determine a cutoff for the PCs for further analysis, I used the elbow plot I generated (shown above). I looked for the “elbow” of the plot, which occurs around PC 5-7, so I could already choose one of these as the cutoff, but I decided to set the cutoff to 12 in order to include more PCs.
 Here I also ran UMAP with dims=1:12, identified neighbors and performed clustering on the data.</p>
 </div>
 </div>
@@ -8300,8 +8292,8 @@ Negative:  NKG7, GZMA, CST7, GNLY, CTSW
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>I wanted to now focus more on individual features and clusters. So going forward I focused only on the first three principal components, since these are the most important ones and likely contain sufficient information for most things I would want to do with this data.</p>
-<p>I used the VizDimLoadings() function on the first three clusters which visualizes the dimensionality loadings of the indicated principal components (in this case, PC 1-3). A “loading” represents the relative contribution of a gene to that principal component. A higher value indicates higher contribution. Identifying important genes that contribute to each PC (e.g. genes that “drive” the variation in the PC) is useful to make sense of variation in the dataset and even analyze the cell types associated with it.</p>
+<p>I wanted to now focus more on individual features and clusters. To understand what drives the variation in the data, I took a closer look at the first three principal components, since these capture the most variation. (The clustering itself still uses PCs 1-12, as described above.)</p>
+<p>I used the VizDimLoadings() function on the first three principal components which visualizes the dimensionality loadings of the indicated principal components (in this case, PC 1-3). A “loading” represents the relative contribution of a gene to that principal component. A higher value indicates higher contribution. Identifying important genes that contribute to each PC (e.g. genes that “drive” the variation in the PC) is useful to make sense of variation in the dataset and even analyze the cell types associated with it.</p>
 </div>
 </div>
 </div>
@@ -8407,7 +8399,7 @@ Negative:  NKG7, GZMA, CST7, GNLY, CTSW
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Here, I could see where each of the eight clusters fell on this DimPlot; some stood out very distinctly (like Cluster 6), and some were closer together (like clusters 7 and 3). I could clearly see how my clusters were distributed relative to each other. Of course, at this point, I didn't have sufficient information about what each cluster was, so I decided try to figure this out.
+<p>Here, I could see where each of the nine clusters (0-8) fell on this DimPlot; some stood out very distinctly (like Cluster 6), and some were closer together (like clusters 7 and 3). I could clearly see how my clusters were distributed relative to each other. Of course, at this point, I didn't have sufficient information about what each cluster was, so I decided to try to figure this out.
 Since this dataset consists of PBMCs, I knew the different cell types I expected to find, and there was a lot of literature about marker genes for each of these cell types. I browsed available literature, consulted my experimental notes from different (related) experiments, and identified some marker genes that I could use to uniquely differentiate some cell types. This was just a starting point, as I can always test different genes and modify my genes of interest.</p>
 <p>I decided to consider the following genes for each cell type below:</p>
 <ul>
@@ -8417,7 +8409,7 @@ Since this dataset consists of PBMCs, I knew the different cell types I expected
 <li>NK cells : NCAM1, KLRD1</li>
 <li>DCs : ITGAX</li>
 </ul>
-<p>I generated feature and violin plots for each of these genes. My hope was that the expression of each gene wouls bw populated in a specific cluster compared to others, therefore helping me identify that cluster as a specific cell type.</p>
+<p>I generated feature and violin plots for each of these genes. My hope was that the expression of each gene would be concentrated in a specific cluster compared to others, therefore helping me identify that cluster as a specific cell type.</p>
 </div>
 </div>
 </div>
@@ -8578,7 +8570,7 @@ I shifted my focus to B cells only. The signature marker I used to identify this
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Just looking at this, I could see that some of these genes were unique to Cluster 3 whereas some were spread between clusters 3 and 7, just like I had seen before with CD79A. From these 6 genes, I would only choose TCL1A and IGHD to be unique markers of Cluster 3.
-I refered to the human protein atlas website (proteinatlas.org) and searched for these genes. I saw that they are both markers enriched in B cells, while TCL1A is also highly expressed in DCs, and IGHD in plasma cells. I used the atlas to also look up other gene hits.</p>
+I referred to the human protein atlas website (proteinatlas.org) and searched for these genes. I saw that they are both markers enriched in B cells, while TCL1A is also highly expressed in DCs, and IGHD in plasma cells. I used the atlas to also look up other gene hits.</p>
 <p>Finally, I performed full cell type annotation to identify all clusters. I set up the cluster names: "Naive CD4 T", "CD14+ Mono", "Memory CD4 T", "B", "CD8 T", "FCGR3A+ Mono", "NK", "DC", "Platelet", and assigned them to the levels of my Seurat object “pbmc.”
 As predicted, Cluster 3 turned out to be B cells!</p>
 </div>
