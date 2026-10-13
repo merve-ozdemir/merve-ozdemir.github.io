@@ -9441,61 +9441,17 @@ leiden
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e5d6beaf">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=finalthk">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">¶</a></h2><table>
-<thead>
-<tr>
-<th></th>
-<th>PCA</th>
-<th>UMAP</th>
-<th>t-SNE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>What it does</td>
-<td>Linear projection: each PC is a weighted sum of genes</td>
-<td>Draws the 15-neighbor graph of the 10 PCs in 2D</td>
-<td>Places cells so that each cell keeps its nearest neighbors</td>
-</tr>
-<tr>
-<td>Meaning of the axes</td>
-<td>Yes: gene weights (loadings) and % variance explained</td>
-<td>None</td>
-<td>None</td>
-</tr>
-<tr>
-<td>Distances between groups</td>
-<td>Meaningful, but only along the 2 PCs shown</td>
-<td>Not reliable</td>
-<td>Not reliable</td>
-</tr>
-<tr>
-<td>Size / spread of a group</td>
-<td>Real, but only along the 2 PCs shown</td>
-<td>Not reliable (groups evened out)</td>
-<td>Not reliable (large clusters get a large area)</td>
-</tr>
-<tr>
-<td>Small or rare groups</td>
-<td>Hidden unless they differ on the PCs shown (DCs, platelets)</td>
-<td>Visible</td>
-<td>Visible</td>
-</tr>
-<tr>
-<td>Main settings I tested</td>
-<td>(number of PCs: chose 10)</td>
-<td><code>n_neighbors</code>, <code>min_dist</code></td>
-<td><code>perplexity</code></td>
-</tr>
-<tr>
-
-<h2 id="Conclusions">Conclusions</h2>
-<p>In this project, starting from raw counts of 2,700 blood cells, I went through quality control, normalization, feature selection and PCA, and found the main PBMC cell types, from large T cell populations down to 15 platelets. I compared three 2D pictures of the same data. PCA was more intuitive, with its axes and distances meaning something, but it only shows a small part of the data at a time. UMAP and t-SNE show all the groups at once and are good for seeing which cells belong together, but how far apart groups look, how big they look and how they are arranged depends on settings I chose. The main lesson for me is to treat a UMAP or t-SNE as a map of neighborhoods rather than distances, and to check any claim about how different or how varied cell types are against the PCs or the gene expression itself. As always, any feedback is welcome!</p>
+<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>In this project, starting from raw counts of 2,700 blood cells, I went through quality control, normalization, feature selection and PCA, and found the main PBMC cell types, from large T cell populations down to 15 platelets. I compared three 2D pictures of the same data. PCA was more intuitive, with its axes and distances meaning something, but it only shows a small part of the data at a time. UMAP and t-SNE show all the groups at once and are good for seeing which cells belong together, but how far apart groups look, how big they look and how they are arranged depends on settings I chose. The main lesson for me is to treat a UMAP or t-SNE as a map of neighborhoods rather than distances, and to check any claim about how different or how varied cell types are against the PCs or the gene expression itself. As always, any feedback is welcome!</p>
+</div>
+</div>
+</div>
+</div>
+</main>
 </body>
 </html>
